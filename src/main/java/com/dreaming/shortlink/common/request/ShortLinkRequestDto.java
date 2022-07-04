@@ -1,6 +1,6 @@
 package com.dreaming.shortlink.common.request;
 
-import com.dreaming.shortlink.common.item.ShortLinkItem;
+import com.dreaming.shortlink.common.item.ShortLinkItemDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +15,8 @@ public class ShortLinkRequestDto {
         this.url = url;
     }
 
-    public ShortLinkItem toEntity() {
-        return ShortLinkItem.builder()
+    public ShortLinkItemDto toEntity() {
+        return ShortLinkItemDto.builder()
                 .url(url)
                 .build();
     }

@@ -9,18 +9,15 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
-@Entity
 @NoArgsConstructor
-public class ShortLinkItem {
+public class ShortLinkItemDto {
 
-    @Id
     private String shortId;
-
     private String url;
     private LocalDateTime createdAt;
 
     @Builder
-    public ShortLinkItem(String shortId, String url, LocalDateTime createdAt) {
+    public ShortLinkItemDto(String shortId, String url, LocalDateTime createdAt) {
         this.shortId = shortId;
         this.url = url;
         this.createdAt = createdAt;

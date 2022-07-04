@@ -1,11 +1,11 @@
 package com.dreaming.shortlink.common.response;
 
-import com.dreaming.shortlink.common.item.ShortLinkItem;
+import com.dreaming.shortlink.common.item.ShortLinkItemDto;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ShortLinkResponseDto<T extends ShortLinkItem> {
+public class ShortLinkResponseDto<T extends ShortLinkItemDto> {
 
     private T data;
 
@@ -14,7 +14,7 @@ public class ShortLinkResponseDto<T extends ShortLinkItem> {
         this.data = data;
     }
 
-    public static <T extends ShortLinkItem> ShortLinkResponseDto of(T item) {
+    public static <T extends ShortLinkItemDto> ShortLinkResponseDto of(T item) {
         return ShortLinkResponseDto.builder()
                 .data(item)
                 .build();
