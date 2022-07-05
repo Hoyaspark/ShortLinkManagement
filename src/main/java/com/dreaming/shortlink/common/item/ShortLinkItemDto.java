@@ -17,10 +17,16 @@ public class ShortLinkItemDto {
     private String url;
     private LocalDateTime createdAt;
 
-    @Builder
     public ShortLinkItemDto(ShortLink entity) {
         this.shortId = entity.getShortId();
         this.url = entity.getUrl();
         this.createdAt = entity.getCreatedAt();
+    }
+
+    @Builder
+    public ShortLinkItemDto(String shortId, String url, LocalDateTime createdAt) {
+        this.shortId = shortId;
+        this.url = url;
+        this.createdAt = createdAt;
     }
 }

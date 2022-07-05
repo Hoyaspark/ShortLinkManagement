@@ -12,7 +12,17 @@ public class ShortLinkRepository {
 
     private final EntityManager em;
 
-    public ShortLink findOne(String shortId) {
+    public ShortLink findShortLinkById(String shortId) {
         return em.find(ShortLink.class, shortId);
     }
+
+
+    public void save(ShortLink shortLink) {
+        if (shortLink.getUrl() == null) {
+            em.persist(shortLink);
+        } else {
+            em.merge(shortLink);
+        }
+    }
+
 }
