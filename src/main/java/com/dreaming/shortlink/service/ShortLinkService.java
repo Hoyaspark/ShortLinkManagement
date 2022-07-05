@@ -12,7 +12,7 @@ public class ShortLinkService {
 
     private final ShortLinkRepository shortLinkRepository;
 
-    public ShortLinkItemDto findOne(String shortId) {
+    public ShortLinkItemDto findShortLinkById(String shortId) {
         ShortLink entity = shortLinkRepository.findOne(shortId);
 
         return new ShortLinkItemDto(entity);

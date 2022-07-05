@@ -29,7 +29,8 @@ public class ShortLinkController {
     @GetMapping("short-links/{short_id}")
     public ShortLinkResponseDto findShortLink(@PathVariable("short_id") String shortId){
 
-        return ShortLinkResponseDto.of((shortLinkService.findOne(shortId)).builder().build());
+        ShortLinkItemDto item = shortLinkService.findShortLinkById(shortId);
+        return ShortLinkResponseDto.of(item);
     }
 
     @GetMapping("/r/{short_id}")
