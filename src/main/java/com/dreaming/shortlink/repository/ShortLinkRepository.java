@@ -1,28 +1,19 @@
 package com.dreaming.shortlink.repository;
 
 import com.dreaming.shortlink.common.domain.ShortLink;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class ShortLinkRepository {
+public interface ShortLinkRepository extends JpaRepository<ShortLink, Long> {
 
-    private final EntityManager em;
+    // select * from shortlink as sl where sl.shortId = "dklfjdl";
+    @Query("SELECT SL FROM ShortLink AS SL WHERE SL.shortId = :shortId")
+    Optional<ShortLink> findByShortId(@Param(value = "shortId") String shortId);
 
-    public ShortLink findShortLinkById(String shortId) {
-        return em.find(ShortLink.class, shortId);
-    }
-
-
-    public void save(ShortLink shortLink) {
-        if (shortLink.getUrl() == null) {
-            em.persist(shortLink);
-        } else {
-            em.merge(shortLink);
-        }
-    }
 
 }

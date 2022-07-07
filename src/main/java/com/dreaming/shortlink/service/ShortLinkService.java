@@ -16,7 +16,7 @@ public class ShortLinkService {
 
     public ShortLinkItemDto findShortLinkById(String shortId) {
 
-        ShortLink entity = shortLinkRepository.findShortLinkById(shortId);
+        ShortLink entity = shortLinkRepository.findById(shortId);
         return new ShortLinkItemDto(entity);
     }
 
