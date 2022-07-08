@@ -6,6 +6,7 @@ import com.dreaming.shortlink.repository.ShortLinkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -16,7 +17,8 @@ public class ShortLinkService {
 
     public ShortLinkItemDto findShortLinkById(String shortId) {
 
-        ShortLink entity = shortLinkRepository.findById(shortId);
+        ShortLink entity = shortLinkRepository.findByShortId(shortId)
+                .orElseThrow(() -> new RuntimeException());
         return new ShortLinkItemDto(entity);
     }
 
@@ -29,6 +31,7 @@ public class ShortLinkService {
     public String generateShortId(String url) {
 
         //중복 확인 로직 추가해야함
+        //shortLinkRepository.findByUrl(url);
 
         int leftLimit = 48; //0
         int rightLimit = 122; //z
@@ -44,6 +47,9 @@ public class ShortLinkService {
     }
 
     public String getUrlByShortId(String shortId) {
-        return shortLinkRepository.findShortLinkById(shortId).getUrl();
+        return shortLinkRepository.findByShortId(shortId)
+                .orElseThrow(() -> new RuntimeException()).getUrl();
+        //null 이면 RuntimeException, 아니면 getUrl() 실행
     }
+
 }

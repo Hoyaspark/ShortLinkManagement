@@ -15,5 +15,6 @@ public interface ShortLinkRepository extends JpaRepository<ShortLink, Long> {
     @Query("SELECT SL FROM ShortLink AS SL WHERE SL.shortId = :shortId")
     Optional<ShortLink> findByShortId(@Param(value = "shortId") String shortId);
 
-
+    @Query("SELECT SL FROM ShortLink AS SL WHERE SL.url = :url")
+    Optional<ShortLink> findByUrl(@Param(value = "url") String url);
 }
