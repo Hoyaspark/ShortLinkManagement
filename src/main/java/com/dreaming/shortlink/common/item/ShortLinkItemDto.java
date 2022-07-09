@@ -29,4 +29,13 @@ public class ShortLinkItemDto {
         this.url = url;
         this.createdAt = createdAt;
     }
+
+    public ShortLink toEntity() {
+        return ShortLink.builder()
+                .shortId(shortId)
+                .url(url)
+                .createdAt(createdAt)
+                .build();
+    }
+
 }

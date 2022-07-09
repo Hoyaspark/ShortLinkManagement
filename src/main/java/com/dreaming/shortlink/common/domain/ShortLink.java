@@ -2,6 +2,7 @@ package com.dreaming.shortlink.common.domain;
 
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,11 @@ public class ShortLink {
     private String url;
 
     private LocalDateTime createdAt;  //LocalDateTime > timestamp, LocalDate > date (in DBMS)
+
+    @Builder
+    public ShortLink(String shortId, String url, LocalDateTime createdAt) {
+        this.shortId = shortId;
+        this.url = url;
+        this.createdAt = createdAt;
+    }
 }

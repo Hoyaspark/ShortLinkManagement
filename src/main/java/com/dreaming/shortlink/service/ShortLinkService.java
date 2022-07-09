@@ -23,15 +23,12 @@ public class ShortLinkService {
     }
 
 
-    public void saveShortLink(ShortLink shortLink) {
-        shortLinkRepository.save(shortLink);
+    public void saveShortLink(ShortLinkItemDto shortLinkItemDto) {
+        shortLinkRepository.save(shortLinkItemDto.toEntity());
     }
 
 
-    public String generateShortId(String url) {
-
-        //중복 확인 로직 추가해야함
-        //shortLinkRepository.findByUrl(url);
+    public String generateShortId() {
 
         int leftLimit = 48; //0
         int rightLimit = 122; //z
@@ -43,7 +40,11 @@ public class ShortLinkService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        return shortId;
+        if (shortLinkRepository.findByShortId(shortId).get() == null) {
+            return shortId;
+        } else {
+            return generateShortId();
+        }
     }
 
     public String getUrlByShortId(String shortId) {
