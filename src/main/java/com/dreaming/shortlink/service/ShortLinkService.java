@@ -2,11 +2,12 @@ package com.dreaming.shortlink.service;
 
 import com.dreaming.shortlink.common.domain.ShortLink;
 import com.dreaming.shortlink.common.item.ShortLinkItemDto;
+import com.dreaming.shortlink.common.response.ShortLinkResponseDto;
 import com.dreaming.shortlink.repository.ShortLinkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -23,12 +24,7 @@ public class ShortLinkService {
     }
 
 
-    public void saveShortLink(ShortLinkItemDto shortLinkItemDto) {
-        shortLinkRepository.save(shortLinkItemDto.toEntity());
-    }
-
-
-    public String generateShortId() {
+    public ShortLinkResponseDto generateShortId(String url) {
 
         int leftLimit = 48; //0
         int rightLimit = 122; //z
@@ -40,11 +36,21 @@ public class ShortLinkService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        if (shortLinkRepository.findByShortId(shortId).get() == null) {
-            return shortId;
-        } else {
-            return generateShortId();
+        if (shortLinkRepository.findByShortId(shortId).isEmpty()) {
+            return generateShortId(url);
         }
+
+        LocalDateTime createdAt = LocalDateTime.now();
+
+        ShortLinkItemDto item = ShortLinkItemDto.builder()
+                .shortId(shortId)
+                .url(url)
+                .createdAt(createdAt)
+                .build();
+
+        shortLinkRepository.save(item.toEntity());
+
+        return ShortLinkResponseDto.of(item);
     }
 
     public String getUrlByShortId(String shortId) {
