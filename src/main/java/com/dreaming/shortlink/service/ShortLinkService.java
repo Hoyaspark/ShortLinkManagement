@@ -6,6 +6,7 @@ import com.dreaming.shortlink.repository.ShortLinkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -27,6 +28,16 @@ public class ShortLinkService {
         shortLinkRepository.save(shortLinkItemDto.toEntity());
     }
 
+    public ShortLinkItemDto buildShortLinkItemDto(String shortId, String url) {
+        LocalDateTime createdAt = LocalDateTime.now();
+
+        return ShortLinkItemDto.builder()
+                .shortId(shortId)
+                .url(url)
+                .createdAt(createdAt)
+                .build();
+    }
+
 
     public String generateShortId() {
 
@@ -40,7 +51,7 @@ public class ShortLinkService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        if (shortLinkRepository.findByShortId(shortId).get() == null) {
+        if (shortLinkRepository.findByShortId(shortId).isPresent()) {
             return shortId;
         } else {
             return generateShortId();

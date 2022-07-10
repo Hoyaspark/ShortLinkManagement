@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class ShortLinkController {
 
     private final ShortLinkService shortLinkService;
@@ -24,13 +24,8 @@ public class ShortLinkController {
     public ShortLinkResponseDto shortLinks(@RequestParam("url") String url) {
 
         String shortId = shortLinkService.generateShortId();
-        LocalDateTime createdAt = LocalDateTime.now();
 
-        ShortLinkItemDto item = ShortLinkItemDto.builder()
-                .shortId(shortId)
-                .url(url)
-                .createdAt(createdAt)
-                .build();
+        ShortLinkItemDto item = shortLinkService.buildShortLinkItemDto(shortId, url);
 
 //        save
         shortLinkService.saveShortLink(item);
