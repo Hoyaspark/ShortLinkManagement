@@ -23,14 +23,7 @@ public class ShortLinkController {
     @PostMapping("/short-links")
     public ShortLinkResponseDto shortLinks(@RequestParam("url") String url) {
 
-        String shortId = shortLinkService.generateShortId();
-
-        ShortLinkItemDto item = shortLinkService.buildShortLinkItemDto(shortId, url);
-
-//        save
-        shortLinkService.saveShortLink(item);
-
-        return ShortLinkResponseDto.of(item);
+        return shortLinkService.generateShortId(url);
     }
 
     @GetMapping("short-links/{short_id}")
